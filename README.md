@@ -6,7 +6,7 @@ This script is written in C. It's been successfully compiled on several Linux di
 Simply run:
 
 ~~~~
-gcc -o DomainMegaBot DomainMegaBot.C
+gcc -o DomainMegaBot DomainMegaBot.c
 ./DomainMegaBot
 ~~~~
 Domain extentions database file TLD_DATA should be put in same directory with DomainMegaBot. The domain prefix dictionary should be a pure UNIX-based text file with one string each line. You can play with our demostration dictionaries to see how the program works.
