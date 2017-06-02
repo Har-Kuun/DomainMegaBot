@@ -121,7 +121,7 @@ int whois_query(char *server , char *query , char **response) {
         perror("FAILED TO SEND QUERY");
     }
     while( (read_size = recv(sock , buffer , sizeof(buffer) , 0) ) ) {
-        *response = realloc(*response , read_size + total_size);
+        *response = (char*)realloc(*response , read_size + total_size);
         if(*response == NULL) {
             printf("FAILED TO ACCESS SYSTEM MEMORY");
         }
@@ -129,7 +129,7 @@ int whois_query(char *server , char *query , char **response) {
         total_size += read_size;
     }
     fflush(stdout);
-    *response = realloc(*response , total_size + 1);
+    *response = (char*)realloc(*response , total_size + 1);
     *(*response + total_size) = '\0';
     close(sock);
     return 0;
@@ -213,7 +213,7 @@ int Str_Split(char *str, char c, char ***arr) {
 char* Str_Conn(const char *s1, const char *s2) {
     const size_t len1 = strlen(s1);
     const size_t len2 = strlen(s2);
-    char *result = malloc(len1+len2+1);
+    char *result = (char*)malloc(len1+len2+1);
     memcpy(result, s1, len1);
     memcpy(result+len1, s2, len2+1);
     return result;
