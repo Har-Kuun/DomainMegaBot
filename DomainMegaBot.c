@@ -23,7 +23,7 @@ int main(int argc , char *argv[]) {
     size_t len = 0; ssize_t read;
     char **arr = NULL;
     char DomainExt[10]={'0'}; char NoMatchPattern[20]; char WhoisQueryServer[40];
-    printf("Thanks you for using DOMAINMEGABOT powered by HAR-KUUN (https://qing.su) and Emkqson (https:pa.ci). \n\nPlease note that this bot does not guarante the availability. Regisirar's rules apply.\n\n");
+    printf("\n\nThanks you for using DOMAINMEGABOT powered by HAR-KUUN (https://qing.su) and Emkqson (https://pa.ci). \n\nPlease note that this bot does not guarante the availability. Regisirar's rules apply.\n\n");
     printf("Please specify TLD: ");
     scanf("%s", Ext);
     while ((read = getline(&line, &len, fp)) != -1) {
@@ -53,7 +53,7 @@ int main(int argc , char *argv[]) {
         printf("Failed to write results to file!\n");
         exit(4);
     }
-    fprintf(fp_Result,"\nThanks you for using DOMAINMEGABOT!\n");
+    fprintf(fp_Result,"\nThanks you for using DomainMegaBot!\n");
     fclose(fp_Result);
     while (1) {
         n=0;
@@ -62,7 +62,7 @@ int main(int argc , char *argv[]) {
             if (c==EOF) {
                 printf("Task finished!\n\n");
                 fp_Result=fopen(Str_Conn(DomainExt,"_RESULTS.DAT"),"a");
-                fprintf(fp_Result,"\nThanks you for using DOMAINMEGABOT!\n");
+                fprintf(fp_Result,"\nThanks you for using DomainMegaBot!\n");
                 fclose(fp_Result);
                 fclose(fp_Dict);
                 exit(0);
@@ -95,7 +95,7 @@ int DomainMegaBot(char *domain , char * NoMatchPattern, char * WhoisQueryServer,
         fclose(fpR);
 	}
 	else
-		printf("%s Not Available.\n", domain);
+		printf("%s Not available.\n", domain);
 	return 0;
 }
 
