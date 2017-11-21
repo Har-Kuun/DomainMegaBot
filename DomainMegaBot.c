@@ -16,15 +16,15 @@ char* Str_Conn(const char *s1, const char *s2);
 int main(int argc , char *argv[]) {
     FILE * fp = fopen("TLD_DATA","r");
     if (fp==NULL) {
-        printf("TLD DATABASE NOT FOUND!\n");
+        printf("TLD database not found!\n");
         exit(1);
     }
     char *line = NULL; char Ext[10];
     size_t len = 0; ssize_t read;
     char **arr = NULL;
     char DomainExt[10]={'0'}; char NoMatchPattern[20]; char WhoisQueryServer[40];
-    printf("THANK YOU FOR USING DOMAINMEGABOT POWERED BY HAR-KUUN (HTTPS://QING.SU). \n\nPLEASE NOTE THAT THIS BOT DOES NOT GUARANTEE THE AVAILABILITY. REGISTRAR'S RULES APPLY.\n\n");
-    printf("PLEASE SPECIFY TLD: ");
+    printf("\n\nThanks you for using DOMAINMEGABOT powered by HAR-KUUN (https://qing.su) and Emkqson (https://pa.ci). \n\nPlease note that this bot does not guarante the availability. Regisirar's rules apply.\n\n");
+    printf("Please specify TLD: ");
     scanf("%s", Ext);
     while ((read = getline(&line, &len, fp)) != -1) {
         Str_Split(line, '=', &arr);
@@ -34,35 +34,35 @@ int main(int argc , char *argv[]) {
         }
     }
     if (*DomainExt == '0') {
-        printf("TLD NOT SUPPORTED!\n");
+        printf("TLD not supported!\n");
         exit(2);
     }
     fclose(fp);
     char DictFile[256];
-    printf("PLEASE SPECIFY DICTIONARY FILE: ");
+    printf("Please specify dicitionary file: ");
     scanf("%s",DictFile);
     FILE * fp_Dict = fopen(DictFile,"r");
     if (fp_Dict==NULL) {
-        printf("DICTIONARY FILE NOT FOUND!\n");
+        printf("dicitionary file not found!\n");
         exit(3);
     }
     char c; size_t n=0;
     char DomainPrefix[70] , domain[100], *data = NULL;
     FILE * fp_Result = fopen(Str_Conn(DomainExt,"_RESULTS.DAT"),"w");
     if (fp_Result==NULL) {
-        printf("FAILED TO WRITE RESULTS TO FILE!\n");
+        printf("Failed to write results to file!\n");
         exit(4);
     }
-    fprintf(fp_Result,"THANK YOU FOR USING DOMAINMEGABOT POWERED BY HAR-KUUN (HTTPS://QING.SU). \n\nBELOW IS THE AVAILABLE DOMAIN NAME LIST BASED ON YOUR QUERY. PLEASE NOTE THAT THIS DOES NOT GUARANTEE THE AVAILABILITY. REGISTRAR'S RULES APPLY.\n\n");
+    fprintf(fp_Result,"\nThanks you for using DomainMegaBot!\n");
     fclose(fp_Result);
     while (1) {
         n=0;
         *DomainPrefix='\0';
         while ((c = fgetc(fp_Dict)) != '\n') {
             if (c==EOF) {
-                printf("TASK FINISHED!\n\nTHANK YOU FOR USING DOMAINMEGABOT POWERED BY HAR-KUUN (HTTPS://QING.SU). HAVE A GREAT DAY!\n");
+                printf("Task finished!\n\n");
                 fp_Result=fopen(Str_Conn(DomainExt,"_RESULTS.DAT"),"a");
-                fprintf(fp_Result,"\nTHANK YOU FOR USING DOMAIN MEGABOT POWERED BY HAR-KUUN (HTTPS://QING.SU). HAVE A GREAT DAY!\n");
+                fprintf(fp_Result,"\nThanks you for using DomainMegaBot!\n");
                 fclose(fp_Result);
                 fclose(fp_Dict);
                 exit(0);
@@ -89,13 +89,13 @@ int DomainMegaBot(char *domain , char * NoMatchPattern, char * WhoisQueryServer,
     }
     while(1);
 	if (strstr(response,NoMatchPattern)!=NULL) {
-		printf("%s AVAILABLE FOR REGISTRATION!\n", domain);
+		printf("%s Available for registration!\n", domain);
 		fpR=fopen(Str_Conn(DomainExt,"_RESULTS.DAT"),"a");
 		fprintf(fpR,"%s\n",domain);
         fclose(fpR);
 	}
 	else
-		printf("%s NOT AVAILABLE.\n", domain);
+		printf("%s Not available.\n", domain);
 	return 0;
 }
 
@@ -108,22 +108,22 @@ int whois_query(char *server , char *query , char **response) {
     memset( &dest , 0 , sizeof(dest) );
     dest.sin_family = AF_INET;
     if(hostname_to_ip(server , ip)) {
-        printf("FAILED TO RESOLVE HOSTNAME");
+        printf("Falied to resolve hostname.");
         return 1;
     }
     dest.sin_addr.s_addr = inet_addr( ip );
     dest.sin_port = htons( 43 );
     if(connect( sock , (const struct sockaddr*) &dest , sizeof(dest) ) < 0) {
-        perror("FAILED TO REACH WHOIS SERVER");
+        perror("Failed to reach whois server.");
     }
     sprintf(message , "%s\r\n" , query);
     if( send(sock , message , strlen(message) , 0) < 0) {
-        perror("FAILED TO SEND QUERY");
+        perror("Failed to send query.");
     }
     while( (read_size = recv(sock , buffer , sizeof(buffer) , 0) ) ) {
         *response = (char*)realloc(*response , read_size + total_size);
         if(*response == NULL) {
-            printf("FAILED TO ACCESS SYSTEM MEMORY");
+            printf("Falied to access system memory.");
         }
         memcpy(*response + total_size , buffer , read_size);
         total_size += read_size;
@@ -170,7 +170,7 @@ int Str_Split(char *str, char c, char ***arr) {
     }
     *arr = (char**) malloc(sizeof(char*) * count);
     if (*arr == NULL) {
-        printf("UNABLE TO ACCESS SYSTEM MEMORY.");
+        printf("Unable to access system memory.");
         exit(9);
     }
     p = str;
@@ -178,7 +178,7 @@ int Str_Split(char *str, char c, char ***arr) {
         if (*p == c) {
 	    (*arr)[i] = (char*) malloc( sizeof(char) * token_len );
 	    if ((*arr)[i] == NULL){
-        printf("UNABLE TO ACCESS SYSTEM MEMORY.");
+        printf("Unable to access system memory.");
         exit(9);
         }
 	    token_len = 0;
@@ -189,7 +189,7 @@ int Str_Split(char *str, char c, char ***arr) {
     }
     (*arr)[i] = (char*) malloc( sizeof(char) * token_len );
     if ((*arr)[i] == NULL) {
-        printf("UNABLE TO ACCESS SYSTEM MEMORY.");
+        printf("Unable to access system memory.");
         exit(9);
     }
     i = 0;
